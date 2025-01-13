@@ -1,5 +1,8 @@
 ﻿@page "/NewAttorney"
-@using System.Diagnostics;
+@using System.Diagnostics;@using LawFirmDirectory.Data
+@using Microsoft.AspNetCore.Authorization
+@inject AppDBContext dbContext
+@attribute [Authorize(Roles = "Administrator")]
 
 <h3>New Attorney</h3>
 
@@ -25,8 +28,7 @@
 	<button type="submit">Submit</button>
 </EditForm>
 
-@using LawFirmDirectory.Data
-@inject AppDBContext dbContext
+
 @code {
 	[SupplyParameterFromForm]
 	private Attorney? newAttorney { get; set; }

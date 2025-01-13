@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using LawFirmDirectory.Models.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace LawFirmDirectory.Data
 {
@@ -6,6 +7,7 @@ namespace LawFirmDirectory.Data
     {
         protected readonly IConfiguration Configuration;
         public DbSet<Attorney> Attorneys { get; set; }
+        public DbSet<UserAccount> UserAccounts { get; set; }
 
         public AppDBContext(IConfiguration configuration)
         {

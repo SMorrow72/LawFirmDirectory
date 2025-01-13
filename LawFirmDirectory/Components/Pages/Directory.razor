@@ -1,5 +1,10 @@
 ﻿@page "/Directory"
+@rendermode InteractiveServer
+@using LawFirmDirectory.Data
+@using Microsoft.AspNetCore.Authorization
 @using System.Diagnostics;
+@inject AppDBContext dbContext
+@attribute [Authorize(Roles = "Administrator,User")]
 
 <PageTitle>Directory</PageTitle>
 
@@ -13,8 +18,7 @@
 	</div>
 }
 
-@using LawFirmDirectory.Data
-@inject AppDBContext dbContext
+
 @code {
 	List<Attorney> Attorneys = new List<Attorney>();
 
