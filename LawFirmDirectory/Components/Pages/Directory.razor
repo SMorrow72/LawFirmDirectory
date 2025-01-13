@@ -14,12 +14,11 @@
 }
 
 @using LawFirmDirectory.Data
-@using LawFirmDirectory.Services
-@inject AttorneyService attorneyService
+@inject AppDBContext dbContext
 @code {
 	List<Attorney> Attorneys = new List<Attorney>();
 
 	protected override async Task OnInitializedAsync() {
-		Attorneys = await attorneyService.GetAllAttorneys();
+		Attorneys = await dbContext.GetAllAttorneys();
 	}
 }

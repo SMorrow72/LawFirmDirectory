@@ -1,0 +1,41 @@
+﻿@page "/NewAttorney"
+@using System.Diagnostics;
+
+<h3>New Attorney</h3>
+
+<EditForm Model="newAttorney" OnValidSubmit="SubmitAttorney" FormName="Attorney1">
+
+	<label>First Name</label>
+	<InputText @bind-Value="newAttorney!.FirstName" />
+	<br />
+	<br />
+	<label>Last Name</label>
+	<InputText @bind-Value="newAttorney!.LastName" />
+	<br />
+	<br />
+	<label>Email</label>
+	<InputText @bind-Value="newAttorney!.Email" />
+	<br />
+	<br />
+	<label>Phone</label>
+	<InputText @bind-Value="newAttorney!.Phone" />
+	<br />
+	<br />
+
+	<button type="submit">Submit</button>
+</EditForm>
+
+@using LawFirmDirectory.Data
+@inject AppDBContext dbContext
+@code {
+	[SupplyParameterFromForm]
+	private Attorney? newAttorney { get; set; }
+
+	protected override void OnInitialized() => newAttorney ??= new();
+
+	private async Task SubmitAttorney()
+	{
+		dbContext.Attorneys.Add(newAttorney);
+		await dbContext.SaveChangesAsync();
+	}
+}

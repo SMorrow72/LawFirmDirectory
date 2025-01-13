@@ -1,5 +1,5 @@
 using LawFirmDirectory.Components;
-using LawFirmDirectory.Services;
+using LawFirmDirectory.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,7 +7,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddSingleton<AttorneyService>();
+builder.Services.AddSingleton<AppDBContext>();
 
 var app = builder.Build();
 
