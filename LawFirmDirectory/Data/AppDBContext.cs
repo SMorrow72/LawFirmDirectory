@@ -4,13 +4,21 @@ namespace LawFirmDirectory.Data
 {
     public class AppDBContext : DbContext
     {
-        string _connectionString = "data source=Nootbook;initial catalog=LawFirmDB;trusted_connection=true;TrustServerCertificate=True";
+        protected readonly IConfiguration Configuration;
+        public DbSet<Attorney> Attorneys { get; set; }
 
-        public DbSet<Attorney> Attorneys {  get; set; }
+        public AppDBContext(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(_connectionString);
+            optionsBuilder.UseSqlServer(Configuration.GetConnectionString("DbConnectionString"));
+        }
+        public async Task<List<Attorney>> GetAllAttorneys()
+        {
+            return await Attorneys.AsNoTracking().ToListAsync();
         }
     }
 }
