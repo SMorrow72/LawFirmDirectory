@@ -1,0 +1,25 @@
+﻿@page "/Directory"
+@using System.Diagnostics;
+
+<PageTitle>Directory</PageTitle>
+
+<h1>Attorney Directory</h1>
+
+@foreach (var att in Attorneys){
+	<div class="container">
+		<h3>@att.FirstName @att.LastName </h3>
+		<p>@att.Email</p>
+		<p>@att.Phone</p>
+	</div>
+}
+
+@using LawFirmDirectory.Data
+@using LawFirmDirectory.Services
+@inject AttorneyService attorneyService
+@code {
+	List<Attorney> Attorneys = new List<Attorney>();
+
+	protected override async Task OnInitializedAsync() {
+		Attorneys = await attorneyService.GetAllAttorneys();
+	}
+}
