@@ -2,32 +2,41 @@
 @using System.Diagnostics;@using LawFirmDirectory.Data
 @using Microsoft.AspNetCore.Authorization
 @inject AppDBContext dbContext
+@inject NavigationManager navigationManager
 @attribute [Authorize(Roles = "Administrator")]
 
 <h3>New Attorney</h3>
+<div class="row">
+	<div class="col-lg-4">
+		<EditForm Model="newAttorney" OnValidSubmit="SubmitAttorney" FormName="Attorney1">
+			<DataAnnotationsValidator />
 
-<EditForm Model="newAttorney" OnValidSubmit="SubmitAttorney" FormName="Attorney1">
-
-	<label>First Name</label>
-	<InputText @bind-Value="newAttorney!.FirstName" />
-	<br />
-	<br />
-	<label>Last Name</label>
-	<InputText @bind-Value="newAttorney!.LastName" />
-	<br />
-	<br />
-	<label>Email</label>
-	<InputText @bind-Value="newAttorney!.Email" />
-	<br />
-	<br />
-	<label>Phone</label>
-	<InputText @bind-Value="newAttorney!.Phone" />
-	<br />
-	<br />
-
-	<button type="submit">Submit</button>
-</EditForm>
-
+			<div class="mb-3">
+				<label>First Name</label>
+				<InputText @bind-Value="newAttorney!.FirstName" />
+				<ValidationMessage For="() => newAttorney!.FirstName" />
+			</div>
+			<div class="mb-3">
+				<label>Last Name</label>
+				<InputText @bind-Value="newAttorney!.LastName" />
+				<ValidationMessage For="() => newAttorney!.LastName" />
+			</div>
+			<div class="mb-3">
+				<label>Email</label>
+				<InputText @bind-Value="newAttorney!.Email" />
+				<ValidationMessage For="() => newAttorney!.Email" />
+			</div>
+			<div class="mb-3">
+				<label>Phone</label>
+				<InputText @bind-Value="newAttorney!.Phone" />
+				<ValidationMessage For="() => newAttorney!.Phone" />
+			</div>
+			<div class="mb-3">
+				<button type="submit">Submit</button>
+			</div>
+		</EditForm>
+	</div>
+</div>
 
 @code {
 	[SupplyParameterFromForm]
@@ -39,5 +48,6 @@
 	{
 		dbContext.Attorneys.Add(newAttorney);
 		await dbContext.SaveChangesAsync();
+		navigationManager.NavigateTo("/directory");
 	}
 }
