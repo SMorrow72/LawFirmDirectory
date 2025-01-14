@@ -22,7 +22,10 @@ builder.Services.AddAuthorization();
 builder.Services.AddCascadingAuthenticationState();
 builder.Services.AddDbContext<AppDBContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DbConnectionString")));
-
+builder.Services.AddAntiforgery(options =>
+{     // Set Cookie properties using CookieBuilder properties†.
+    options.Cookie.Expiration = TimeSpan.Zero;
+});
 
 var app = builder.Build();
 
@@ -40,6 +43,8 @@ app.UseStaticFiles();
 app.UseAntiforgery();
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapRazorComponents<App>().DisableAntiforgery().AddInteractiveServerRenderMode();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
